@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+  <action name="verification_marker" type="Javascript"><![CDATA[
+    if (document.getElementById('krpano-verification-marker')) return;
+    const marker = document.createElement('div');
+    marker.id = 'krpano-verification-marker';
+    marker.textContent = 'Authorized XSS verification | Origin: ' + window.location.origin;
+    Object.assign(marker.style, {
+      position: 'fixed', top: '0', left: '0', padding: '16px',
+      background: '#fff', color: '#000', border: '3px solid red',
+      zIndex: '2147483647'
+    });
+    document.body.appendChild(marker);
+    console.log('KRPANO_VERIFICATION', window.location.origin);
+  ]]></action>
+  <events name="verification_events" onxmlcomplete="verification_marker();" />
+</krpano>
