@@ -5,13 +5,8 @@
       var params = new URLSearchParams(window.location.search);
       var id = params.get("id") || "laporan";
 
-      var documents = {
-        "laporan": "laporan.pdf",
-        "lampiran": "lampiran.pdf"
-      };
-
-      if (!Object.prototype.hasOwnProperty.call(documents, id)) {
-        console.error("ID PDF tidak terdaftar:", id);
+      if (!/^[A-Za-z0-9_-]{1,100}$/.test(id)) {
+        console.error("Nama file PDF tidak valid:", id);
         return;
       }
 
@@ -19,18 +14,27 @@
         return;
       }
 
+      var pdfUrl =
+        "https://ryanedua.github.io/verification-demo/files/" +
+        encodeURIComponent(id) +
+        ".pdf";
+
       var frame = document.createElement("iframe");
       frame.id = "report-pdf-viewer";
-      frame.title = "Dokumen pengujian";
-      frame.src =
-        "https://ryanedua.github.io/verification-demo/files/" +
-        documents[id];
-
+      frame.title = "Dokumen PDF: " + id;
+      frame.src = pdfUrl;
       frame.style.cssText =
-        "position:fixed;top:0;left:0;width:100%;height:100%;" +
-        "border:0;background:white;z-index:2147483647;";
+        "position:fixed;" +
+        "top:0;" +
+        "left:0;" +
+        "width:100%;" +
+        "height:100%;" +
+        "border:0;" +
+        "background:#fff;" +
+        "z-index:2147483647;";
 
       document.body.appendChild(frame);
+      console.log("PDF viewer:", pdfUrl);
     }());
   ]]></action>
 
